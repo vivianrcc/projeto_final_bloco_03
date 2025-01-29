@@ -13,6 +13,15 @@ function Home() {
                         </p>
 
 
+<<<<<<< Updated upstream
+=======
+                    <div className="flex justify-center ">
+                        <img
+                            src="https://encurtador.com.br/3MK6p"
+                            alt="Imagem de um gato "
+                            className='w-2/3'
+                        />
+>>>>>>> Stashed changes
                     </div>
                 </div>
 
