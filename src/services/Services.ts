@@ -1,10 +1,7 @@
 import axios from "axios";
 
-const api = axios.create({
-    baseURL: 'https://jsonplaceholder.typicode.com'
-})
+const baseApi = axios.create({	
+    baseURL: 'http://localhost:8080',
+});
 
-export const consultar = async (url: string, setDados: Function) => {
-    const resposta = await api.get(url)
-    setDados(resposta.data)
-}
+export default baseApi;
