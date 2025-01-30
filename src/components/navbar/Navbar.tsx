@@ -9,7 +9,7 @@ function Navbar() {
 
                 <img
                     src="https://abrir.link/iQjFM"
-                    alt="Imagem Página Home"
+                    alt="Imagen de un pinguino medico con una vacuna"
                     className="w-1/1 rounded-lg shadow-lg"
                 />
 
@@ -18,10 +18,10 @@ function Navbar() {
 
                     <div>
                         <ul className="flex gap-5">
-                            <li><Link to="/home">Home </Link></li>
-                            <li><Link to="/home">Produtos </Link></li>
-                            <li><Link to="/" >Categorias </Link></li>
-                            <li><Link to="/home">Contato </Link></li>
+                            <li><Link to="/home">Home</Link></li>
+                            <li><Link to="/listacategorias">Lista de Categorias</Link></li>
+                            <li><Link to="/cadastrarcategoria">Cadastrar Categorias</Link></li>
+                            <li><Link to="/cadastrarproduto">Cadastrar Produto</Link></li>
                         </ul>
 
                     </div>

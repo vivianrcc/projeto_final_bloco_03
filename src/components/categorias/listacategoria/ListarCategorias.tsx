@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import categoriaServices from "../../../services/CategoriaServices";
 import CardCategorias from "../cardcategoria/CardCategoria";
+import FormCategoria from "../formcategoria/FormCategoria"; // Importando o FormCategoria
 
 const ListarCategorias = () => {
     const [categorias, setCategorias] = useState<any[]>([]);
@@ -11,7 +12,6 @@ const ListarCategorias = () => {
         try {
             const response = await categoriaServices.getCategorias();
             console.log("Resposta da API:", response.data); 
-    
             if (Array.isArray(response.data)) {
                 setCategorias(response.data);
             } else {
@@ -25,10 +25,18 @@ const ListarCategorias = () => {
             setIsLoading(false);
         }
     };
-    
+
     useEffect(() => {
         listarCategorias(); 
     }, []);
+
+    // Função para atualizar a lista de categorias
+    const atualizarListaCategorias = (novaCategoria: any) => {
+        setCategorias((prevCategorias) => [
+            ...prevCategorias,
+            novaCategoria,
+        ]);
+    };
 
     return (
         <div className="container mx-auto py-8">
@@ -48,6 +56,9 @@ const ListarCategorias = () => {
                             <p className="text-center">Nenhuma categoria encontrada.</p>
                         )}
                     </div>
+
+                    {/* Passando a função 'atualizarListaCategorias' para o FormCategoria */}
+                    <FormCategoria atualizarListaCategorias={atualizarListaCategorias} />
                 </>
             )}
         </div>

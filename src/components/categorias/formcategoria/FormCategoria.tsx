@@ -1,36 +1,26 @@
+import { ChangeEvent, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import categoriaServices from "../../../services/CategoriaServices";  
-import { ChangeEvent, useEffect, useState } from "react";
+import categoriaServices from "../../../services/CategoriaServices";
 import Categoria from "../../../models/Categoria";
 import { RotatingLines } from "react-loader-spinner";
 
-const FormTema = () => {
-    const navigate = useNavigate();
+// Definindo o tipo das props
+interface FormCategoriaProps {
+    atualizarListaCategorias: (novaCategoria: any) => void;
+}
 
+const FormCategoria = ({ atualizarListaCategorias }: FormCategoriaProps) => {
+    const navigate = useNavigate();
     const [categoria, setCategoria] = useState<Categoria>({} as Categoria);
     const [isLoading, setIsLoading] = useState<boolean>(false);
-
     const { id } = useParams<{ id: string }>();
 
-    const buscarPorId = async (id: string) => {
-        try {
-            const response = await categoriaServices.getCategoriaById(Number(id));
-            setCategoria(response.data);
-        } catch (error: any) {
-            console.log(error);
-        }
-    }
-
-    useEffect(() => {
-        if (id !== undefined) {
-            buscarPorId(id);
-        }
-    }, [id]);
-
+    // Função para atualizar o estado da categoria
     const atualizarEstado = (e: ChangeEvent<HTMLInputElement>) => {
         setCategoria({ ...categoria, [e.target.name]: e.target.value });
     }
 
+    // Função para retornar à lista de categorias
     const retornar = () => {
         navigate('/categorias');
     }
@@ -40,13 +30,17 @@ const FormTema = () => {
         setIsLoading(true);
 
         try {
+            let resposta;
             if (id !== undefined) {
-
-                await categoriaServices.updateCategoria(categoria);
+                // Atualizar categoria existente
+                resposta = await categoriaServices.updateCategoria(categoria);
             } else {
-
-                await categoriaServices.createCategoria(categoria);
+                // Criar nova categoria
+                resposta = await categoriaServices.createCategoria(categoria);
             }
+
+            // Chama a função do componente pai para atualizar a lista de categorias
+            atualizarListaCategorias(resposta.data);
         } catch (error: any) {
             console.log(error);
         } finally {
@@ -63,12 +57,12 @@ const FormTema = () => {
 
             <form className="w-1/2 flex flex-col gap-4" onSubmit={gerarNovaCategoria}>
                 <div className="flex flex-col gap-2">
-                    <label htmlFor="nome">Nome da Categoria</label>
+                    <label htmlFor="nome">Categoria</label>
                     <input
                         type="text"
-                        placeholder="Nome da Categoria"
+                        placeholder="Beleza, cosméticos ..."
                         name="nome"
-                        className="border-2 border-slate-700 rounded p-2"
+                        className="border-4 border-slate-500 rounded-lg p-2"
                         value={categoria.nome || ""}
                         onChange={atualizarEstado}
                     />
@@ -77,9 +71,9 @@ const FormTema = () => {
                     <label htmlFor="descricao">Descrição da Categoria</label>
                     <input
                         type="text"
-                        placeholder="Descreva aqui sua categoria"
+                        placeholder="Exemplo: Beleza, Perfumaria, etc...."
                         name="descricao"
-                        className="border-2 border-slate-700 rounded p-2"
+                        className="border-4 border-slate-500 rounded-lg p-2"
                         value={categoria.descricao || ""}
                         onChange={atualizarEstado}
                     />
@@ -105,4 +99,4 @@ const FormTema = () => {
     );
 }
 
-export default FormTema;
+export default FormCategoria;

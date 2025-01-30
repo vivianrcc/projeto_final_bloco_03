@@ -1,25 +1,26 @@
-import axios, { AxiosResponse } from 'axios';
+import services from './Services'; 
 import Categoria from '../models/Categoria';
+import { AxiosResponse } from 'axios';
 
 class CategoriaServices {
     async getCategorias(): Promise<AxiosResponse<any, any>> {
-        return axios.get('/categorias');
+        return services.get('/categorias'); 
     }
 
     async getCategoriaById(id: number): Promise<AxiosResponse<any, any>> {
-        return axios.get(`/categorias/${id}`);
+        return services.get(`/categorias/${id}`);
     }
 
     async createCategoria(categoria: Categoria): Promise<AxiosResponse<any, any>> {
-        return axios.post('/categorias', categoria);
+        return services.post('/categorias', categoria);
     }
 
     async updateCategoria(categoria: Categoria): Promise<AxiosResponse<any, any>> {
-        return axios.put(`/categorias/${categoria.id}`, categoria);
+        return services.put(`/categorias/${categoria.id}`, categoria);
     }
 
     async deleteCategoria(id: number): Promise<AxiosResponse<any, any>> {
-        return axios.delete(`/categorias/${id}`);
+        return services.delete(`/categorias/${id}`);
     }
 }
 
